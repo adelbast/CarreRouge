@@ -1,0 +1,46 @@
+Noms:
+
+carré 
+coeur 
+cadre 
+rectangles 
+pion
+jeu
+pointeur 
+souris
+ensemble
+espace
+vitesse 
+temps
+fin 
+
+Adjectifs:
+
+petit 
+rouge 
+noir
+bleus 
+blanc
+constante
+exterieur
+longtemps
+
+
+
+Verbes:
+
+est situé 
+borduré 
+trouve 
+positionnés
+représente 
+devez
+empêchez
+touche
+parvenir
+pouvez 
+faire suivre
+ne faites pas déborder
+êtes cuits  
+tenir
+affiche
