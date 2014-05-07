@@ -1,6 +1,6 @@
 from tkinter import *
 import random
-import time
+from timeit import default_timer
 
 class Vue():
     def __init__(self,parent):
@@ -42,6 +42,8 @@ class Vue():
         if "pion" in lestags:
             print("mort modele")
             self.parent.actif=0
+            self.parent.modele.score = default_timer()-self.parent.modele.start
+            print(self.parent.modele.score)
         
  
 class Pion():
@@ -79,11 +81,14 @@ class Modele():
         self.pions=[]
         self.carre=Carre(self)
         self.creerPions()
+        self.start = default_timer()
+        self.score=0
+        
     
     def creerPions(self):
-            self.pions.append(Pion(self,80,80,160,160))
+            self.pions.append(Pion(self,60,60,160,160))
             self.pions.append(Pion(self,355,340,455,360))
-            self.pions.append(Pion(self,340,135,400,195))
+            self.pions.append(Pion(self,330,135,390,185))
             self.pions.append(Pion(self,115,350,145,410))
     def miseajour(self):
         for i in self.pions:
@@ -99,7 +104,7 @@ class Controleur():
         self.vue.miseajour(self.modele)
         self.gameOn()
         self.vue.root.mainloop()
-        
+ 
     def carrebouge(self,x,y):
         self.modele.carre.bouge(x,y)
         
