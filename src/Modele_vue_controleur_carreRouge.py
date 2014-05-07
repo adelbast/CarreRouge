@@ -30,6 +30,11 @@ class Vue():
             self.canevas.create_rectangle(i.x1,i.y1,i.x2,i.y2,fill="blue", tags=("pion"))
         j=modele.carre
         self.canevas.create_rectangle(j.x1,j.y1,j.x2,j.y2,fill="red", tags=("carre"))
+        self.canevas.addtag_overlapping ("collision",j.x1,j.y1,j.x2,j.y2)
+        lestags=self.canevas.gettags("collision")
+        if "pion" in lestags:
+            print("mort modele")
+            self.parent.actif=0
  
 class Pion():
     def __init__(self,parent,x,y):
@@ -95,6 +100,9 @@ class Controleur():
             self.modele.miseajour()
             self.vue.miseajour(self.modele)
             self.vue.root.after(50,self.gameOn)
+        else:
+            print ("controleur mort")
+
             
 if __name__ == '__main__':
     c=Controleur()
