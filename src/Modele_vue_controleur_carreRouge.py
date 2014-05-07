@@ -15,6 +15,12 @@ class Vue():
     def gotbouge(self,evt):
         if self.carrebouge:
             self.parent.carrebouge(evt.x,evt.y)
+            if evt.x <70 or evt.x>530:
+                self.parent.actif=0
+
+            if evt.y <70 or evt.y>530:
+                self.parent.actif=0
+            
         
     def gotclick(self,evt):
         lestags=self.canevas.gettags("current")
@@ -35,6 +41,7 @@ class Vue():
         if "pion" in lestags:
             print("mort modele")
             self.parent.actif=0
+        
  
 class Pion():
     def __init__(self,parent,x,y):
@@ -99,7 +106,7 @@ class Controleur():
         if self.actif:
             self.modele.miseajour()
             self.vue.miseajour(self.modele)
-            self.vue.root.after(50,self.gameOn)
+            self.vue.root.after(20,self.gameOn)
         else:
             print ("controleur mort")
 
