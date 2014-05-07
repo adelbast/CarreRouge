@@ -1,5 +1,6 @@
 from tkinter import *
 import random
+import time
 
 class Vue():
     def __init__(self,parent):
@@ -44,12 +45,12 @@ class Vue():
         
  
 class Pion():
-    def __init__(self,parent,x,y):
+    def __init__(self,parent,x1,y1,x2,y2):
         self.parent=parent 
-        self.x1=x-10
-        self.x2=x+10
-        self.y1=y-10
-        self.y2=y+10
+        self.x1=x1
+        self.x2=x2
+        self.y1=y1
+        self.y2=y2
     def bouge(self,x=10,y=10):
         xa=random.randrange(x)*(random.randrange(3)-1)
         ya=random.randrange(x)*(random.randrange(3)-1)
@@ -79,11 +80,11 @@ class Modele():
         self.carre=Carre(self)
         self.creerPions()
     
-    def creerPions(self,n=4):
-        for i in range(n):
-            x=random.randrange(500)+50
-            y=random.randrange(500)+50
-            self.pions.append(Pion(self,x,y))
+    def creerPions(self):
+            self.pions.append(Pion(self,80,80,160,160))
+            self.pions.append(Pion(self,355,340,455,360))
+            self.pions.append(Pion(self,340,135,400,195))
+            self.pions.append(Pion(self,115,350,145,410))
     def miseajour(self):
         for i in self.pions:
             i.bouge()
