@@ -163,9 +163,7 @@ class Controleur():
     
             
         
-        
-    def highScore(self):
-        tableau
+  
         
 
             
