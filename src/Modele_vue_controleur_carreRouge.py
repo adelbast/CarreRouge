@@ -38,7 +38,7 @@ class Vue():
     def afficherTimer(self):
         self.parent.modele.score = default_timer()-self.parent.modele.start
         print(self.parent.modele.score)
-        tkinter.messagebox.showinfo("GameOver","Vous avez toffé "+ (str)(round(self.parent.modele.score))+ " secondes" )
+        tkinter.messagebox.showinfo("GameOver","Vous avez survécu pendant "+ (str)(round(self.parent.modele.score))+ " secondes" )
 
         
         
@@ -140,9 +140,6 @@ class Controleur():
         print (self.tabScore)
        
         
-
-
-        
     def reset(self):
         self.modele.resetJeu()
         self.vue.miseajour(self.modele)
@@ -165,8 +162,6 @@ class Controleur():
 
     
             
-                
-        
         
         
     def highScore(self):
