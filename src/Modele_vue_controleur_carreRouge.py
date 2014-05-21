@@ -1,6 +1,7 @@
 from tkinter import *
 import random
 from timeit import default_timer
+import tkinter.messagebox
 
 class Vue():
     def __init__(self,parent):
@@ -27,9 +28,19 @@ class Vue():
         lestags=self.canevas.gettags("current")
         if "carre" in lestags:
             self.carrebouge=1
+        if self.parent.aClique==0:
+            self.parent.aClique=1
+            self.parent.modele.start = default_timer()
             
     def forgotclick(self,evt):
         self.carrebouge=0
+
+    def afficherTimer(self):
+        self.parent.modele.score = default_timer()-self.parent.modele.start
+        print(self.parent.modele.score)
+        tkinter.messagebox.showinfo("GameOver","Vous avez toffé "+ (str)(round(self.parent.modele.score))+ " secondes" )
+
+        
         
     def miseajour(self,modele):
         self.canevas.delete(ALL)
@@ -42,10 +53,7 @@ class Vue():
         if "pion" in lestags:
             print("mort modele")
             self.parent.actif=0
-            self.parent.modele.score = default_timer()-self.parent.modele.start
-            print(self.parent.modele.score)
-        
- 
+             
 class Pion():
     def __init__(self,parent,x1,y1,x2,y2):
         self.parent=parent 
@@ -81,7 +89,6 @@ class Modele():
         self.pions=[]
         self.carre=Carre(self)
         self.creerPions()
-        self.start = default_timer()
         self.score=0
         
     
@@ -90,31 +97,81 @@ class Modele():
             self.pions.append(Pion(self,355,340,455,360))
             self.pions.append(Pion(self,330,135,390,185))
             self.pions.append(Pion(self,115,350,145,410))
+            
     def miseajour(self):
         for i in self.pions:
             i.bouge()
     def carrebouge(self,x,y):
         self.carre.bouge(x,y)
+
+    def resetJeu(self):
+        self.__init__(self.parent)
             
 class Controleur():
     def __init__(self):
         self.actif=1
+        self.aClique=0
+        self.tabScore=[]
         self.modele=Modele(self) 
         self.vue=Vue(self)
         self.vue.miseajour(self.modele)
         self.gameOn()
         self.vue.root.mainloop()
+        
  
     def carrebouge(self,x,y):
         self.modele.carre.bouge(x,y)
         
     def gameOn(self):
         if self.actif:
-            self.modele.miseajour()
-            self.vue.miseajour(self.modele)
+            if self.aClique:
+                self.modele.miseajour()
+                self.vue.miseajour(self.modele)
             self.vue.root.after(20,self.gameOn)
         else:
-            print ("controleur mort")
+            self.vue.afficherTimer()
+            if self.checkHighScore():
+                self.demanderNom(self.checkHighScore())
+            self.reset()
+
+    def demanderNom(self, position):
+        nom=tkinter.simpledialog.askstring("High-Score","Vous êtes " + str(position)+" Entrez votre nom: ")
+        self.tabScore.insert(position-1,[nom,self.modele.score])
+        print (self.tabScore)
+       
+        
+
+
+        
+    def reset(self):
+        self.modele.resetJeu()
+        self.vue.miseajour(self.modele)
+        self.actif=1
+        self.aClique=0
+        self.gameOn()
+
+    def checkHighScore(self):
+        if len(self.tabScore)==0:
+            return 1
+        position=1
+        for i in range(5):
+            print(self.tabScore[i])
+            if self.modele.score > self.tabScore[i][1]:
+                return position
+            position+=1
+            if position > len(self.tabScore) and position < 5:
+                return position
+        return False
+
+    
+            
+                
+        
+        
+        
+    def highScore(self):
+        tableau
+        
 
             
 if __name__ == '__main__':
