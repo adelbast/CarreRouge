@@ -38,7 +38,7 @@ class Vue():
     def afficherTimer(self):
         self.parent.modele.score = default_timer()-self.parent.modele.start
         print(self.parent.modele.score)
-        tkinter.messagebox.showinfo("GameOver","Vous avez survécu pendant "+ (str)(round(self.parent.modele.score))+ " secondes" )
+        tkinter.messagebox.showinfo("GameOver","Vous avez survécu "+ (str)(round(self.parent.modele.score))+ " secondes" )
 
         
         
@@ -55,20 +55,38 @@ class Vue():
             self.parent.actif=0
              
 class Pion():
-    def __init__(self,parent,x1,y1,x2,y2):
+    def __init__(self,parent,x1,y1,x2,y2,directX,directY):
         self.parent=parent 
         self.x1=x1
         self.x2=x2
         self.y1=y1
         self.y2=y2
-    def bouge(self,x=10,y=10):
-        xa=random.randrange(x)*(random.randrange(3)-1)
-        ya=random.randrange(x)*(random.randrange(3)-1)
-        self.x1=self.x1+xa
-        self.x2=self.x2+xa
-        self.y1=self.y1+xa
-        self.y2=self.y2+xa
-              
+        self.acceleration = 1
+        self.directX=directX  
+        self.directY=directY 
+        
+    def bouge(self):
+        
+        if self.x1 <= 0 or self.x2 >= 500:
+            self.directX = self.directX * -1
+        if self.y1 <= 0 or self.y2 >= 500:
+            self.directY = self.directY * -1
+        
+        self.x1+=self.directX* self.acceleration
+        self.x2 += self.directX* self.acceleration
+        self.y1+=self.directY* self.acceleration
+        self.y2 += self.directY * self.acceleration   
+        """
+        self.parent.pions[0].x1+=
+        self.parent.pions[0].x2+=1
+        self.parent.pions[0].y1+=1
+        self.parent.pions[0].y2+=1
+
+        self.parent.pions[3].x1-=1
+        self.parent.pions[3].x2-=1
+        self.parent.pions[3].y1-=1
+        self.parent.pions[3].y2-=1
+        """ 
 class Carre():
     def __init__(self,parent):
         self.parent=parent 
@@ -93,10 +111,10 @@ class Modele():
         
     
     def creerPions(self):
-            self.pions.append(Pion(self,60,60,160,160))
-            self.pions.append(Pion(self,355,340,455,360))
-            self.pions.append(Pion(self,330,135,390,185))
-            self.pions.append(Pion(self,115,350,145,410))
+            self.pions.append(Pion(self,60,60,160,160,2,2))
+            self.pions.append(Pion(self,355,340,455,360,-2,-2))
+            self.pions.append(Pion(self,330,135,390,185,-2,2))
+            self.pions.append(Pion(self,115,350,145,410,2,-2))
             
     def miseajour(self):
         for i in self.pions:
@@ -127,7 +145,10 @@ class Controleur():
             if self.aClique:
                 self.modele.miseajour()
                 self.vue.miseajour(self.modele)
-            self.vue.root.after(20,self.gameOn)
+                
+                for i in self.modele.pions:
+                    i.acceleration+=0.05
+            self.vue.root.after(50,self.gameOn)
         else:
             self.vue.afficherTimer()
             if self.checkHighScore():
@@ -139,6 +160,9 @@ class Controleur():
         self.tabScore.insert(position-1,[nom,self.modele.score])
         print (self.tabScore)
        
+        
+
+
         
     def reset(self):
         self.modele.resetJeu()
@@ -162,8 +186,12 @@ class Controleur():
 
     
             
+                
         
-  
+        
+        
+    def highScore(self):
+        tableau
         
 
             
