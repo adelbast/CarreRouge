@@ -153,10 +153,16 @@ class Controleur():
             self.vue.afficherTimer()
             if self.checkHighScore():
                 self.demanderNom(self.checkHighScore())
+            h=""
+            compteur = 1;
+            for i in self.tabScore:
+                h+= str(compteur)+ "-" + i[0].upper()+ " " + str(round(i[1])) + " secondes" + "\n"
+                compteur+= 1
+            tkinter.messagebox.showinfo("High-Scores",h )   
             self.reset()
 
     def demanderNom(self, position):
-        nom=tkinter.simpledialog.askstring("High-Score","Vous êtes " + str(position)+" Entrez votre nom: ")
+        nom=tkinter.simpledialog.askstring("High-Score","Vous êtes " +  str(position)+" Entrez votre nom: ")
         self.tabScore.insert(position-1,[nom,self.modele.score])
         print (self.tabScore)
        
